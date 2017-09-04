@@ -91,7 +91,7 @@ export class ContactsService {
     return new Observable((o: Observer<any>) => {
       let existing = this.contacts.filter(c => c.id == id);
       if (existing.length) {
-        o.next(existing);
+        o.next(existing[0]);
         return o.complete();
       } else {
         return o.error('Not found');
