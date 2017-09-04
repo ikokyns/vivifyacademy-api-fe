@@ -49,13 +49,24 @@ export class ContactsService {
   public editContact(contact: Contact)
   {
     return new Observable((o: Observer<any>) => {
-      let existing = this.contacts.filter(c => c.id == contact.id);
-      if (existing.length) {
-        Object.assign(existing[0], contact);
-      }
+      this.http.put('http://localhost:8000/api/contacts/' + contact.id, {
+        'first_name': contact.firstName,
+        'last_name': contact.lastName,
+        'email': contact.email,
+      })
+        .subscribe(
+          (contact: any) => {
+            let existing = this.contacts.filter(c => c.id == contact.id);
+            if (existing.length) {
+              existing[0].firstName = contact.first_name;
+              existing[0].lastName = contact.last_name;
+              existing[0].email = contact.email;
+            }
 
-      o.next(existing);
-      return o.complete();
+            o.next(existing[0]);
+            return o.complete();
+          }
+        );
     });
   }
 
