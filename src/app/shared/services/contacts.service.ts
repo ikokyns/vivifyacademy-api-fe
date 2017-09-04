@@ -7,7 +7,6 @@ import { Observable, Observer } from 'rxjs';
 export class ContactsService {
 
   private contacts: Contact[] = [];
-  private idCount: number = 3;
 
   constructor(private http: HttpClient) { }
 
@@ -31,12 +30,19 @@ export class ContactsService {
   public addContact(contact: Contact)
   {
     return new Observable((o: Observer<any>) => {
-      this.idCount++;
-      let c = new Contact(this.idCount, contact.firstName, contact.lastName, contact.email);
-
-      this.contacts.push(c);
-      o.next(c);
-      return o.complete();
+      this.http.post('http://localhost:8000/api/contacts', {
+        'first_name': contact.firstName,
+        'last_name': contact.lastName,
+        'email': contact.email,
+      })
+        .subscribe(
+          (c: any) => {
+            let newC = new Contact(c.id, c.first_name, c.last_name, c.email);
+            this.contacts.push(newC);
+            o.next(newC);
+            return o.complete();
+          }
+        );
     });
   }
 
