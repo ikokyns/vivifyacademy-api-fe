@@ -13,17 +13,13 @@ export class ContactsService {
   public getContacts()
   {
     return new Observable((o: Observer<any>) => {
-      this.http.get('http://localhost:8000/api/contacts')
-        .subscribe(
-          (contacts: any[]) => {
-            contacts.forEach(c => {
-              this.contacts.push(new Contact(c.id, c.first_name, c.last_name, c.email));
-            });
-
-            o.next(this.contacts);
-            return o.complete();
-          }
-        );
+      this.http.get("http://localhost:8000/api/contacts").subscribe((contacts: any[]) => {
+        this.contacts = contacts.map((contact) => {
+          return new Contact(contact.id, contact.first_name, contact.last_name, contact.email);
+        });
+        o.next(this.contacts);
+        return o.complete();
+      })
     });
   }
 
