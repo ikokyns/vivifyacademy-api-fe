@@ -30,16 +30,14 @@ export class ContactsService {
         'first_name': contact.firstName,
         'last_name': contact.lastName,
         'email': contact.email,
-      })
-        .subscribe(
-          (c: any) => {
-            let newC = new Contact(c.id, c.first_name, c.last_name, c.email);
-            this.contacts.push(newC);
-            o.next(newC);
-            return o.complete();
-          }
-        );
-    });
+      }).subscribe(
+         (c: any) => {
+          let newC = new Contact(c.id, c.first_name, c.last_name, c.email);
+          this.contacts.push(newC);
+          o.next(newC);
+          return o.complete();
+         });
+     });
   }
 
   public editContact(contact: Contact)
@@ -49,8 +47,7 @@ export class ContactsService {
         'first_name': contact.firstName,
         'last_name': contact.lastName,
         'email': contact.email,
-      })
-        .subscribe(
+      }).subscribe(
           (contact: any) => {
             let existing = this.contacts.filter(c => c.id == contact.id);
             if (existing.length) {
@@ -58,7 +55,6 @@ export class ContactsService {
               existing[0].lastName = contact.last_name;
               existing[0].email = contact.email;
             }
-
             o.next(existing[0]);
             return o.complete();
           }
