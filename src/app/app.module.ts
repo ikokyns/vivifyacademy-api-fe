@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ng2-validation';
 import { ContactFormComponent } from './components/contacts/contact-form/contact-form.component';
 import { ContactRowComponent } from './components/contacts/contact-row/contact-row.component';
+import { LoginComponent } from './components/auth/login.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ContactRowComponent } from './components/contacts/contact-row/contact-r
     LayoutComponent,
     ContactDetailsComponent,
     ContactFormComponent,
-    ContactRowComponent
+    ContactRowComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

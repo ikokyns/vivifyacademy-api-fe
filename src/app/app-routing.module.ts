@@ -3,12 +3,17 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ContactsComponent } from './components/contacts/contacts.component';
 import { ContactDetailsComponent } from './components/contacts/contact-details/contact-details.component';
+import { LoginComponent } from './components/auth/login.component';
 
 const appRoutes: Routes = [
   {
     path: '',
     redirectTo: '/contacts',
     pathMatch: 'full'
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   },
   {
     path: 'contacts',

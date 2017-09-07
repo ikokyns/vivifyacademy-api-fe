@@ -36,6 +36,8 @@ export class ContactsService {
           this.contacts.push(newC);
           o.next(newC);
           return o.complete();
+         }, () => {
+           console.log('Error');
          });
      });
   }
@@ -83,11 +85,17 @@ export class ContactsService {
     return new Observable((o: Observer<any>) => {
       this.http.get('http://localhost:8000/api/contacts/' + id)
         .subscribe(
-          (contact: any) => {
-            o.next(new Contact(contact.id, contact.first_name, contact.last_name, contact.email));
-            return o.complete();
-          }
-        );
+          // (contact: any) => {
+          //   o.next(new Contact(contact.id, contact.first_name, contact.last_name, contact.email));
+          //   return o.complete();
+          // }
+          (contact: any)=>{
+            let existing = this.contacts.filter(c => c.id == id);
+            if (existing.length) {
+             o.next(existing[0]);
+             return o.complete();
+            }
+          });
     });
   }
 
